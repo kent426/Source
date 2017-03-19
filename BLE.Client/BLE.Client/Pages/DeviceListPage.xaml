@@ -8,7 +8,7 @@
     <MasterDetailPage.Master>
         <ContentPage Title = "Test">
             <StackLayout>
-                <Button Text="Detail1" />
+                <Button Text="Detail1" Command="togo" />
                 <Button Text="Detail2" />
                 <Button Text="Detail3" />
             </StackLayout>

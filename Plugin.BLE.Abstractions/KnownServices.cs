@@ -54,6 +54,9 @@ namespace Plugin.BLE.Abstractions
             new KnownService("TI SensorTag Connection Control", Guid.ParseExact("f000ccc0-0451-4000-b000-000000000000", "d")),
             new KnownService("TI SensorTag OvertheAir Download", Guid.ParseExact("f000ffc0-0451-4000-b000-000000000000", "d")),
             new KnownService("TXRX_SERV_UUID RedBearLabs Biscuit Service", Guid.ParseExact("713d0000-503e-4c75-ba94-3148f18d941e", "d")),
+
+
+            new KnownService("RFduino Generic Service", Guid.ParseExact("aba8a706-f28c-11e6-bc64-92361f002671", "d")),
         };
 
     }

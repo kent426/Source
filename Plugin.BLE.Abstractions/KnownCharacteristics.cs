@@ -215,6 +215,10 @@ namespace Plugin.BLE.Abstractions
             new KnownCharacteristic("RedBearLabs Biscuit DEV_NAME_CHAR_UUID Read", Guid.ParseExact("713d0005-503e-4c75-ba94-3148f18d941e", "d")),
             new KnownCharacteristic("RedBearLabs Biscuit VERSION_CHAR_UUID unknown", Guid.ParseExact("713d0006-503e-4c75-ba94-3148f18d941e", "d")),
             new KnownCharacteristic("RedBearLabs Biscuit TX_POWER_CHAR_UUID unknown", Guid.ParseExact("713d0007-503e-4c75-ba94-3148f18d941e", "d")),
+
+            new KnownCharacteristic("RFduino Generic Read",         Guid.ParseExact("aba8a707-f28c-11e6-bc64-92361f002671", "d")),
+            new KnownCharacteristic("RFduino Generic Write",        Guid.ParseExact("aba8a708-f28c-11e6-bc64-92361f002671", "d")),
+            new KnownCharacteristic("RFduino Generic Disconnect",   Guid.ParseExact("aba8a709-f28c-11e6-bc64-92361f002671", "d")),
         };
     }
 }
