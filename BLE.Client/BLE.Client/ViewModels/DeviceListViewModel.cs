@@ -37,11 +37,15 @@ namespace BLE.Client.ViewModels
         }
 
         public MvxCommand RefreshCommand => new MvxCommand(() => TryStartScanning(true));
-        public MvxCommand<DeviceListItemViewModel> DisconnectCommand => new MvxCommand<DeviceListItemViewModel>(DisconnectDevice);
 
-        public MvxCommand<DeviceListItemViewModel> ConnectDisposeCommand => new MvxCommand<DeviceListItemViewModel>(ConnectAndDisposeDevice);
+        public MvxCommand<DeviceListItemViewModel> DisconnectCommand => 
+            new MvxCommand<DeviceListItemViewModel>(DisconnectDevice);
 
-        public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
+        public MvxCommand<DeviceListItemViewModel> ConnectDisposeCommand => 
+            new MvxCommand<DeviceListItemViewModel>(ConnectAndDisposeDevice);
+
+        public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = 
+            new ObservableCollection<DeviceListItemViewModel>();
         public bool IsRefreshing => Adapter.IsScanning;
         public bool IsStateOn => _bluetoothLe.IsOn;
         public string StateText => GetStateText();
@@ -222,7 +226,7 @@ namespace BLE.Client.ViewModels
             _cancellationTokenSource = new CancellationTokenSource();
             RaisePropertyChanged(() => StopScanCommand);
 
-            Adapter.StartScanningForDevicesAsync(_cancellationTokenSource.Token);
+            await Adapter.StartScanningForDevicesAsync(_cancellationTokenSource.Token);
             RaisePropertyChanged(() => IsRefreshing);
         }
 
