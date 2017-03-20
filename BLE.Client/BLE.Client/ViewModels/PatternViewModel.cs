@@ -8,11 +8,41 @@ using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
 using Plugin.BLE.Abstractions.Extensions;
+using System.Collections.Generic;
 
 namespace BLE.Client.ViewModels
 {
     public class PatternViewModel : BaseViewModel
     {
+
+        //the master  items
+        public class MasterPageItem
+        {
+            public string Title { get; set; }
+
+            //public string IconSource { get; set; }
+
+            //public Type TargetType { get; set; }
+        }
+
+        public List<MasterPageItem> MenuItems { get; set; } = new List<MasterPageItem>
+            {
+                new MasterPageItem
+                {
+                    Title = "Devices",
+                    //IconSource = "todo.png",
+                    //TargetType = typeof(MainPage)
+                },
+                new MasterPageItem
+                {
+                    Title = "Modes",
+                    //IconSource = "todo.png",
+                   // TargetType = typeof(TabbedPageModeAndAdjustment)
+                },
+            };
+        //the master  items
+
+
         private static Guid RFduinoService = Guid.ParseExact("aba8a706-f28c-11e6-bc64-92361f002671", "d");
         private static Guid RFduinoWriteCharacteristic = Guid.ParseExact("aba8a708-f28c-11e6-bc64-92361f002671", "d");
 
@@ -52,24 +82,27 @@ namespace BLE.Client.ViewModels
 
             _device = GetDeviceFromBundle(parameters);
 
-            if (_device == null)
-            {
-                Close(this);
-            }
-            var service = await _device.GetServiceAsync(RFduinoService);
-            Characteristic = await service.GetCharacteristicAsync(RFduinoWriteCharacteristic);
+            //TODO when sending data, validate
+            //if (_device == null)
+            //{
+            //    Close(this);
+            //}
+            //var service = await _device.GetServiceAsync(RFduinoService);
+            //Characteristic = await service.GetCharacteristicAsync(RFduinoWriteCharacteristic);
         }
 
         public override void Resume()
         {
             base.Resume();
 
-            if (Characteristic != null)
-            {
-                return;
-            }
+            //TODO when sending data, validate
 
-            Close(this);
+            //if (Characteristic != null)
+            //{
+            //    return;
+            //}
+
+            //Close(this);
         }
 
         public MvxCommand ReadCommand => new MvxCommand(ReadValueAsync);
@@ -167,64 +200,64 @@ namespace BLE.Client.ViewModels
             return text.Split(' ').Where(token => !string.IsNullOrEmpty(token)).Select(token => Convert.ToByte(token, 16)).ToArray();
         }
 
-        public MvxCommand ToggleUpdatesCommand => new MvxCommand((() =>
-        {
-            if (_updatesStarted)
-            {
-                StopUpdates();
-            }
-            else
-            {
-                StartUpdates();
-            }
-        }));
+        //public MvxCommand ToggleUpdatesCommand => new MvxCommand((() =>
+        //{
+        //    if (_updatesStarted)
+        //    {
+        //        StopUpdates();
+        //    }
+        //    else
+        //    {
+        //        StartUpdates();
+        //    }
+        //}));
 
-        private async void StartUpdates()
-        {
-            try
-            {
-                _updatesStarted = true;
+        //private async void StartUpdates()
+        //{
+        //    try
+        //    {
+        //        _updatesStarted = true;
 
-                Characteristic.ValueUpdated -= CharacteristicOnValueUpdated;
-                Characteristic.ValueUpdated += CharacteristicOnValueUpdated;
-                await Characteristic.StartUpdatesAsync();
+        //        Characteristic.ValueUpdated -= CharacteristicOnValueUpdated;
+        //        Characteristic.ValueUpdated += CharacteristicOnValueUpdated;
+        //        await Characteristic.StartUpdatesAsync();
 
 
-                Messages.Insert(0, $"Start updates");
+        //        Messages.Insert(0, $"Start updates");
 
-                RaisePropertyChanged(() => UpdateButtonText);
+        //        RaisePropertyChanged(() => UpdateButtonText);
 
-            }
-            catch (Exception ex)
-            {
-                _userDialogs.ShowError(ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _userDialogs.ShowError(ex.Message);
+        //    }
+        //}
 
-        private async void StopUpdates()
-        {
-            try
-            {
-                _updatesStarted = false;
+        //private async void StopUpdates()
+        //{
+        //    try
+        //    {
+        //        _updatesStarted = false;
 
-                await Characteristic.StopUpdatesAsync();
-                Characteristic.ValueUpdated -= CharacteristicOnValueUpdated;
+        //        await Characteristic.StopUpdatesAsync();
+        //        Characteristic.ValueUpdated -= CharacteristicOnValueUpdated;
 
-                Messages.Insert(0, $"Stop updates");
+        //        Messages.Insert(0, $"Stop updates");
 
-                RaisePropertyChanged(() => UpdateButtonText);
+        //        RaisePropertyChanged(() => UpdateButtonText);
 
-            }
-            catch (Exception ex)
-            {
-                _userDialogs.ShowError(ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _userDialogs.ShowError(ex.Message);
+        //    }
+        //}
 
-        private void CharacteristicOnValueUpdated(object sender, CharacteristicUpdatedEventArgs characteristicUpdatedEventArgs)
-        {
-            Messages.Insert(0, $"Updated value: {CharacteristicValue}");
-            RaisePropertyChanged(() => CharacteristicValue);
-        }
+        //private void CharacteristicOnValueUpdated(object sender, CharacteristicUpdatedEventArgs characteristicUpdatedEventArgs)
+        //{
+        //    Messages.Insert(0, $"Updated value: {CharacteristicValue}");
+        //    RaisePropertyChanged(() => CharacteristicValue);
+        //}
     }
 }

@@ -18,6 +18,35 @@ namespace BLE.Client.ViewModels
 {
     public class DeviceListViewModel : BaseViewModel
     {
+
+        //the master  items
+        public class MasterPageItem
+        {
+            public string Title { get; set; }
+
+            //public string IconSource { get; set; }
+
+            //public Type TargetType { get; set; }
+        }
+
+        public List<MasterPageItem> MenuItems { get; set; } = new List<MasterPageItem>
+            {
+                new MasterPageItem
+                {
+                    Title = "Devices",
+                    //IconSource = "todo.png",
+                    //TargetType = typeof(MainPage)
+                },
+                new MasterPageItem
+                {
+                    Title = "Modes",
+                    //IconSource = "todo.png",
+                   // TargetType = typeof(TabbedPageModeAndAdjustment)
+                },
+            };
+        //the master  items
+
+
         private readonly IBluetoothLE _bluetoothLe;
         private readonly IUserDialogs _userDialogs;
         private readonly ISettings _settings;

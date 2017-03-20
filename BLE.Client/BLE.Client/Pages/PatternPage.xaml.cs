@@ -20,6 +20,9 @@ namespace BLE.Client.Pages
         {
             InitializeComponent();
 
+            NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasNavigationBar(this, false);
+
             modes = new ObservableCollection<Mode>
             {
                 new Mode("Rainbow", "bg_1.png", "mode_selected_icon.png"),
